@@ -43,4 +43,3 @@ Open your browser at **`http://localhost:8080`**.
 - **Parameterized Queries**: Uses `SqlParameter` objects across all ADO.NET calls to prevent SQL injection vulnerabilities.
 - **Session Protection**: Validates active session keys on `Welcome.aspx` and automatically redirects unauthorized visitors to `Login.aspx`.
 - **Session Cleanup**: Performs `Session.Clear()` and `Session.Abandon()` upon sign-out.
-# Employee-Login

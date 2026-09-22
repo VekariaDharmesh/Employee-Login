@@ -1,0 +1,15 @@
+# Build and temporary files
+bin/
+obj/
+.vs/
+*.user
+*.suo
+
+# Local SQLite databases & test logs
+*.sqlite
+*.sqlite3
+*.db
+
+# OS generated files
+.DS_Store
+Thumbs.db
