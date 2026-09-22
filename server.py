@@ -9,7 +9,7 @@ import sqlite3
 import os
 import uuid
 
-PORT = 8080
+PORT = int(os.environ.get("PORT", 8080))
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_FILE = os.path.join(BASE_DIR, "EmployeeDB.sqlite")
 
@@ -328,7 +328,7 @@ if __name__ == '__main__':
     init_db()
     socketserver.TCPServer.allow_reuse_address = True
     with socketserver.TCPServer(("", PORT), AppRequestHandler) as httpd:
-        print(f"EmployeeApp local preview running at http://localhost:{PORT}")
+        print(f"EmployeeApp server running at http://0.0.0.0:{PORT}", flush=True)
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
