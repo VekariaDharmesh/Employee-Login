@@ -9,7 +9,6 @@
 <body>
     <form id="form1" runat="server">
         <div class="card">
-            <div class="card-header-icon">🔐</div>
             <h1>Employee Sign In</h1>
             <p class="subtitle">Enter your employee code and password to access your account</p>
 
@@ -17,7 +16,7 @@
 
             <div class="form-group">
                 <label for="txtEmployeeCode">Employee Code</label>
-                <asp:TextBox ID="txtEmployeeCode" runat="server" placeholder="e.g. EMP001" autocomplete="off" />
+                <asp:TextBox ID="txtEmployeeCode" runat="server" placeholder="Enter employee code" autocomplete="off" />
             </div>
 
             <div class="form-group">

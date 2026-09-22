@@ -15,7 +15,7 @@ A clean employee authentication and dashboard application featuring **Registrati
 
 1. **Database Setup**
    - Open **SQL Server Management Studio (SSMS)**.
-   - Run `Database.sql` to generate the `EmployeeDB` database, the `Employees` table, and default test credentials (`EMP001` / `123456`).
+   - Run `Database.sql` to generate the `EmployeeDB` database and the `Employees` table.
 
 2. **Open / Create the Solution**
    - In Visual Studio, create a new **ASP.NET Web Application (.NET Framework)** using the **Empty** template with **Web Forms** checked.

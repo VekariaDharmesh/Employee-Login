@@ -9,8 +9,7 @@
 <body>
     <form id="form1" runat="server">
         <div class="card welcome-card">
-            <div class="card-header-icon">👋</div>
-            <span class="welcome-badge">● Signed In</span>
+            <span class="welcome-badge">Signed In</span>
 
             <h1>Welcome, <asp:Literal ID="litFullName" runat="server" /></h1>
             <p class="subtitle">Employee portal session is active</p>

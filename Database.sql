@@ -15,8 +15,3 @@ CREATE TABLE Employees (
     CreatedDate   DATETIME NOT NULL DEFAULT GETDATE()
 );
 GO
-
--- default test employee account
-INSERT INTO Employees (FullName, EmployeeCode, Email, Password)
-VALUES ('Demo Employee', 'EMP001', 'demo@company.com', '123456');
-GO

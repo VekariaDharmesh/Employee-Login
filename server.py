@@ -29,12 +29,6 @@ def init_db():
             CreatedDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
-    cur.execute("SELECT COUNT(*) FROM Employees")
-    if cur.fetchone()[0] == 0:
-        cur.execute('''
-            INSERT INTO Employees (FullName, EmployeeCode, Email, Password)
-            VALUES (?, ?, ?, ?)
-        ''', ('Demo Employee', 'EMP001', 'demo@company.com', '123456'))
     conn.commit()
     conn.close()
 
@@ -131,7 +125,6 @@ class AppRequestHandler(http.server.BaseHTTPRequestHandler):
 <body>
     <form id="form1" method="post" action="/Login.aspx">
         <div class="card">
-            <div class="card-header-icon">🔐</div>
             <h1>Employee Sign In</h1>
             <p class="subtitle">Enter your employee code and password to access your account</p>
 
@@ -139,7 +132,7 @@ class AppRequestHandler(http.server.BaseHTTPRequestHandler):
 
             <div class="form-group">
                 <label for="txtEmployeeCode">Employee Code</label>
-                <input type="text" id="txtEmployeeCode" name="txtEmployeeCode" value="{employee_code}" placeholder="e.g. EMP001" autocomplete="off" required />
+                <input type="text" id="txtEmployeeCode" name="txtEmployeeCode" value="{employee_code}" placeholder="Enter employee code" autocomplete="off" required />
             </div>
 
             <div class="form-group">
@@ -151,10 +144,6 @@ class AppRequestHandler(http.server.BaseHTTPRequestHandler):
 
             <div class="link-row">
                 Don't have an account? <a href="/Register.aspx">Register here</a>
-            </div>
-
-            <div style="margin-top: 22px; padding-top: 14px; border-top: 1px solid #e2e8f0; font-size: 12.5px; color: #64748b; text-align: center;">
-                💡 Demo Account: <strong>EMP001</strong> &nbsp;|&nbsp; Password: <strong>123456</strong>
             </div>
         </div>
     </form>
@@ -202,7 +191,6 @@ class AppRequestHandler(http.server.BaseHTTPRequestHandler):
 <body>
     <form id="form1" method="post" action="/Register.aspx">
         <div class="card">
-            <div class="card-header-icon">📝</div>
             <h1>Employee Registration</h1>
             <p class="subtitle">Fill in the form below to create your employee profile</p>
 
@@ -210,22 +198,22 @@ class AppRequestHandler(http.server.BaseHTTPRequestHandler):
 
             <div class="form-group">
                 <label for="txtFullName">Full Name</label>
-                <input type="text" id="txtFullName" name="txtFullName" value="{full_name}" placeholder="e.g. John Doe" required />
+                <input type="text" id="txtFullName" name="txtFullName" value="{full_name}" placeholder="Enter full name" required />
             </div>
 
             <div class="form-group">
                 <label for="txtEmployeeCode">Employee Code</label>
-                <input type="text" id="txtEmployeeCode" name="txtEmployeeCode" value="{employee_code}" placeholder="e.g. EMP002" autocomplete="off" required />
+                <input type="text" id="txtEmployeeCode" name="txtEmployeeCode" value="{employee_code}" placeholder="Enter employee code" autocomplete="off" required />
             </div>
 
             <div class="form-group">
                 <label for="txtEmail">Email Address</label>
-                <input type="email" id="txtEmail" name="txtEmail" value="{email}" placeholder="e.g. john@company.com" required />
+                <input type="email" id="txtEmail" name="txtEmail" value="{email}" placeholder="Enter email address" required />
             </div>
 
             <div class="form-group">
                 <label for="txtPassword">Password</label>
-                <input type="password" id="txtPassword" name="txtPassword" placeholder="Create a secure password" required />
+                <input type="password" id="txtPassword" name="txtPassword" placeholder="Create a password" required />
             </div>
 
             <button type="submit" id="btnRegister" name="btnRegister" class="btn-primary">Create Account</button>
@@ -289,8 +277,7 @@ class AppRequestHandler(http.server.BaseHTTPRequestHandler):
 <body>
     <form id="form1" method="post" action="/Welcome.aspx">
         <div class="card welcome-card">
-            <div class="card-header-icon">👋</div>
-            <span class="welcome-badge">● Signed In</span>
+            <span class="welcome-badge">Signed In</span>
 
             <h1>Welcome, {full_name}</h1>
             <p class="subtitle">Employee portal session is active</p>
