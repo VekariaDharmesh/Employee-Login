@@ -265,8 +265,23 @@ class AppRequestHandler(http.server.BaseHTTPRequestHandler):
             self.redirect("/Login.aspx")
             return
 
+        employee_id = session.get("EmployeeId")
         full_name = session.get("FullName", "Employee")
         employee_code = session.get("EmployeeCode", "-")
+        email = "N/A"
+        join_date = "Recently"
+
+        try:
+            conn = sqlite3.connect(DB_FILE)
+            cur = conn.cursor()
+            cur.execute("SELECT FullName, EmployeeCode, Email, CreatedDate FROM Employees WHERE EmployeeId = ?", (employee_id,))
+            row = cur.fetchone()
+            conn.close()
+            if row:
+                full_name, employee_code, email, raw_date = row
+                join_date = str(raw_date)[:10] if raw_date else "Recently"
+        except Exception:
+            pass
 
         html = f"""<!DOCTYPE html>
 <html>
@@ -286,6 +301,14 @@ class AppRequestHandler(http.server.BaseHTTPRequestHandler):
                 <div class="welcome-info-row">
                     <span class="welcome-info-label">Employee Code</span>
                     <span class="welcome-info-value">{employee_code}</span>
+                </div>
+                <div class="welcome-info-row">
+                    <span class="welcome-info-label">Email</span>
+                    <span class="welcome-info-value">{email}</span>
+                </div>
+                <div class="welcome-info-row">
+                    <span class="welcome-info-label">Member Since</span>
+                    <span class="welcome-info-value">{join_date}</span>
                 </div>
                 <div class="welcome-info-row">
                     <span class="welcome-info-label">Account Status</span>

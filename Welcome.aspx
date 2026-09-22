@@ -14,10 +14,20 @@
             <h1>Welcome, <asp:Literal ID="litFullName" runat="server" /></h1>
             <p class="subtitle">Employee portal session is active</p>
 
+            <asp:Label ID="lblMessage" runat="server" CssClass="message" Text="" />
+
             <div class="welcome-info-box">
                 <div class="welcome-info-row">
                     <span class="welcome-info-label">Employee Code</span>
                     <span class="welcome-info-value"><asp:Literal ID="litEmployeeCode" runat="server" /></span>
+                </div>
+                <div class="welcome-info-row">
+                    <span class="welcome-info-label">Email</span>
+                    <span class="welcome-info-value"><asp:Literal ID="litEmail" runat="server" /></span>
+                </div>
+                <div class="welcome-info-row">
+                    <span class="welcome-info-label">Member Since</span>
+                    <span class="welcome-info-value"><asp:Literal ID="litJoinDate" runat="server" /></span>
                 </div>
                 <div class="welcome-info-row">
                     <span class="welcome-info-label">Account Status</span>

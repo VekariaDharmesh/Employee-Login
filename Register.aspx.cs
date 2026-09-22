@@ -1,5 +1,6 @@
 using System;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI;
 
@@ -18,7 +19,7 @@ namespace EmployeeApp
             string email = txtEmail.Text.Trim();
             string password = txtPassword.Text.Trim();
 
-            // make sure all required fields are filled out
+            // validate required form fields
             if (string.IsNullOrEmpty(fullName) || string.IsNullOrEmpty(employeeCode) ||
                 string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
@@ -26,7 +27,7 @@ namespace EmployeeApp
                 return;
             }
 
-            // fetch db connection string
+            // read database connection string from Web.config
             string connStr = ConfigurationManager.ConnectionStrings["EmployeeDBConnection"].ConnectionString;
 
             using (SqlConnection conn = new SqlConnection(connStr))
@@ -35,12 +36,12 @@ namespace EmployeeApp
                 {
                     conn.Open();
 
-                    // check if employee code or email is already in use
+                    // verify employee code and email uniqueness
                     string checkQuery = "SELECT COUNT(*) FROM Employees WHERE EmployeeCode = @EmployeeCode OR Email = @Email";
                     using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn))
                     {
-                        checkCmd.Parameters.AddWithValue("@EmployeeCode", employeeCode);
-                        checkCmd.Parameters.AddWithValue("@Email", email);
+                        checkCmd.Parameters.Add(new SqlParameter("@EmployeeCode", SqlDbType.NVarChar, 50) { Value = employeeCode });
+                        checkCmd.Parameters.Add(new SqlParameter("@Email", SqlDbType.NVarChar, 100) { Value = email });
 
                         int existingCount = (int)checkCmd.ExecuteScalar();
                         if (existingCount > 0)
@@ -50,27 +51,27 @@ namespace EmployeeApp
                         }
                     }
 
-                    // insert the new employee record
+                    // insert new employee using parameterized command
                     string insertQuery = "INSERT INTO Employees (FullName, EmployeeCode, Email, Password) " +
                                           "VALUES (@FullName, @EmployeeCode, @Email, @Password)";
 
                     using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn))
                     {
-                        insertCmd.Parameters.AddWithValue("@FullName", fullName);
-                        insertCmd.Parameters.AddWithValue("@EmployeeCode", employeeCode);
-                        insertCmd.Parameters.AddWithValue("@Email", email);
-                        insertCmd.Parameters.AddWithValue("@Password", password);
+                        insertCmd.Parameters.Add(new SqlParameter("@FullName", SqlDbType.NVarChar, 100) { Value = fullName });
+                        insertCmd.Parameters.Add(new SqlParameter("@EmployeeCode", SqlDbType.NVarChar, 50) { Value = employeeCode });
+                        insertCmd.Parameters.Add(new SqlParameter("@Email", SqlDbType.NVarChar, 100) { Value = email });
+                        insertCmd.Parameters.Add(new SqlParameter("@Password", SqlDbType.NVarChar, 100) { Value = password });
 
                         insertCmd.ExecuteNonQuery();
                     }
 
-                    // account created successfully, navigate to login
+                    // redirect to login after registration
                     Response.Redirect("Login.aspx");
                 }
                 catch (Exception)
                 {
-                    // generic fallback error message
-                    lblMessage.Text = "Unable to complete registration. Please try again.";
+                    // generic user friendly message without exposing database details
+                    lblMessage.Text = "Something went wrong. Please try again.";
                 }
             }
         }
